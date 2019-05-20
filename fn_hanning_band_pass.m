@@ -1,4 +1,4 @@
-function window = fn_hanning_band_pass(no_pts, start_rise_fract, end_rise_fract, start_fall_fract, end_fall_fract);
+function window = fn_hanning_band_pass(no_pts, start_rise_fract, end_rise_fract, start_fall_fract, end_fall_fract)
 %USAGE
 %	window = fn_hanning_band_pass(no_pts, start_rise_fract, end_rise_fract, start_fall_fract, end_fall_fract);
 %SUMMARY
@@ -20,7 +20,7 @@ function window = fn_hanning_band_pass(no_pts, start_rise_fract, end_rise_fract,
 window = fn_hanning_hi_pass(no_pts, start_rise_fract, end_rise_fract) .* fn_hanning_lo_pass(no_pts, start_fall_fract, end_fall_fract);
 return;
 
-function window = fn_hanning_hi_pass(no_pts, start_rise_fract, end_rise_fract);
+function window = fn_hanning_hi_pass(no_pts, start_rise_fract, end_rise_fract)
 x = linspace(0, 1, no_pts)';
 window = 0.5 * (1 - cos(pi * (x - start_rise_fract) / (end_rise_fract - start_rise_fract))) .* (x > start_rise_fract);
 window(find(x > end_rise_fract)) = 1;
