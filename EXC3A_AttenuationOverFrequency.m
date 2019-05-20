@@ -64,4 +64,5 @@ k = find(f>=f(1,i)+freq_mag_drop,1,'first');
 figure(03)
 plot(f(1,j:k)/1e6,alpha(1,j:k))
 xlabel('Freq (MHz)');
-ylabel('Attenuation (Db/mm)');
+ylabel('Attenuation (Np/mm)');
+title('Frequency V Attenuation')

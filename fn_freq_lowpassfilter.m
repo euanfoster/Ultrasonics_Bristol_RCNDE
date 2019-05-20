@@ -1,6 +1,6 @@
-function  [filtered_voltage] = fn_freq_filter(voltage, time, f_centre)
+function  [filtered_voltage] = fn_freq_lowpassfilter(voltage, time, f_centre)
 %USAGE
-%	[filtered_voltage] = fn_freq_filter(voltage, time, f_centre)
+%	[filtered_voltage] = fn_freq_lowpassfilter(voltage, time, f_centre)
 %AUTHOR
 %	Euan Foster (2019)
 %SUMMARY
@@ -8,7 +8,8 @@ function  [filtered_voltage] = fn_freq_filter(voltage, time, f_centre)
 %	the transducer. Returns a filtered signal in the time domain
 %OUTPUTS
 %	Outputs a filtered signal in the time domain with only the low
-%	frequencies of interest present
+%	frequencies of interest present at the same sample length as the
+%	original signal
 %INPUTS
 %	voltage - sampled voltage values
 %	time    - sampled time values
@@ -34,6 +35,7 @@ window = fn_hanning_lo_pass(n/2,j/(n/2),k/(n/2));
 %checks
 %plotting half of the first column of the abs spectra voltage values
 % figure(03)
+% clf
 % yyaxis left
 % plot(f,P(:,1))
 % yyaxis right
@@ -42,8 +44,9 @@ window = fn_hanning_lo_pass(n/2,j/(n/2),k/(n/2));
 % title('Half Frequency Spectra and Window');
 
 %Doubling the window to match mirroring effect of the fft
+window =[window; flip(window)];
 %caulculating the filtered singal over the full spectra content
-filtered_spectra = Y(1:n/2,:) .* window; 
+filtered_spectra = Y.* window; 
 
 %checks
 %plotting the full first column of the abs voltage spectra and window
@@ -58,7 +61,7 @@ filtered_spectra = Y(1:n/2,:) .* window;
 % title('Full Frequency Spectra and Window');
 
 %checks
-%plotting the full first column of the abs filtered voltage spectra and window
+%plotting the full first column of the abs filtered vthe moltage spectra and window
 % figure(04)
 % clf
 % yyaxis left
@@ -71,6 +74,6 @@ filtered_spectra = Y(1:n/2,:) .* window;
 % legend('Freq Magnitude','Window');
 
 %converting back to the time domain on full Frequency Spectra
-filtered_voltage = real(ifft(filtered_spectra,length(time)));
-
+filtered_voltage = real(ifft(filtered_spectra,n));
+filtered_voltage = filtered_voltage(1:length(time),:);
 end

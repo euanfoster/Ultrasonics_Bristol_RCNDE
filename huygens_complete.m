@@ -12,7 +12,7 @@ frequency = 1e6;
 
 %transducer details
 transducer_width = 20e-3;
-min_sources_per_wavelength = 5;
+min_sources_per_wavelength = 2;
 
 grid_size = 100e-3;
 grid_pts = 100;
@@ -52,10 +52,17 @@ k = 2*pi/wavelength;
 
 p = (1/sqrt(r_value)).*exp(1i*k*r_value);
 p = sum(p,3);
+p = abs(p)/max(max(abs(p)));                        %Normalising the image data to the max
+p = 20*log10(p);                                    %Converting to dB scale
+
 
 %FINISH OF MAIN CALCUALTION
 toc
 
 %plot field
-imagesc(abs(p))
-%caxis ([ 0 90 ])
+imagesc(p)
+colorbar
+caxis ([ -30 0])
+title("Huygen's Field Model [dB]")
+xlabel('X Position [mm]')
+ylabel('Z Position [mm]')

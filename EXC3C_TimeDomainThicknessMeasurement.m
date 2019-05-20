@@ -88,16 +88,6 @@ thickness = speed.*delta_t;
 thickness = movmean(thickness,3);
 
 figure(03)
-plot(pos,thickness);
-
-
-
-
-
-
-
-
-
-
-
-
+plot(pos*1e3,thickness*1e3);
+xlabel('Transducer Position [mm]')
+ylabel('Thickness of Component [mm]')

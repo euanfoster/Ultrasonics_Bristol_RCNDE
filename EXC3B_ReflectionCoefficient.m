@@ -76,7 +76,7 @@ figure(03)
 plot(f_jointon / 1e6,P_jointon_B,f_jointon / 1e6, P_jointoff_B);
 title('Frequency Spectra')
 xlabel('Freq (Mhz)');
-ylabel('Reflection Coefficient');
+ylabel('Magnitude');
 legend('Joint on','Joint off')
 
 %% Truncating Frequency Spectra to region of Interest
